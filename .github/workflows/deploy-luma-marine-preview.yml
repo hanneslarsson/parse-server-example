@@ -1,0 +1,40 @@
+# TEMPORARY preview deploy for the Luma Marine Flutter web app.
+#
+# This workflow only exists because the app currently lives in a subfolder
+# of this (unrelated) repo, on a feature branch, while waiting to be moved
+# to its own repo (Luma-Marine-Client). Delete this file once that move
+# happens — the canonical, non-temporary workflow already lives at
+# luma-marine/.github/workflows/deploy.yml and will take over automatically
+# once luma-marine/ becomes the root of its own repo.
+name: Deploy Luma Marine preview to GitHub Pages
+
+on:
+  push:
+    branches: [claude/luma-marine-webpage-7nhkse]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: luma-marine
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - run: flutter pub get
+
+      - run: flutter build web --release --no-web-resources-cdn --base-href "/${{ github.event.repository.name }}/"
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: luma-marine/build/web

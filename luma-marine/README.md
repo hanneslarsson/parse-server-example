@@ -20,10 +20,10 @@ Without it, the storefront will show a "couldn't load the catalog" state.
   processor wired up — clearly labeled as a demo checkout in the UI).
 - Date-controlled announcement banners and contact info/opening hours on the
   homepage, both editable from the admin panel.
-- Visual identity matched to the Luma Marine merchandise line — deep navy
-  + white as the core brand colors, the "LM" monogram/wordmark, Inter/Inter
-  Tight type. See **[BRAND.md](./BRAND.md)** for the full rationale and the
-  published brand guide.
+- Visual identity built on deep navy + white as the core brand colors, the
+  "LM" monogram/wordmark, and InterDisplay/Inter type. See
+  **[BRAND.md](./BRAND.md)** for the rationale, or `/admin/brand` in the
+  app itself for the full guide (palette, type, logo usage, do/don't).
 - A client-side password gate for previewing the site while it's in
   development (see **Preview password** below) — separate from and unrelated
   to admin login.
@@ -42,6 +42,8 @@ Without it, the storefront will show a "couldn't load the catalog" state.
   toggle (an inactive supplier's articles stop showing in the shop), create/
   edit/remove.
 - Admin users: create additional admin accounts, deactivate them.
+- Brand: the full brand guide (palette, type, logo construction and
+  clear-space, do/don't, application examples) — see **BRAND.md** above.
 
 ## Running locally
 

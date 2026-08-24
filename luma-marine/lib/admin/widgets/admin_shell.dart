@@ -5,7 +5,7 @@ import '../../providers/admin_auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/luma_logo.dart';
 
-enum AdminSection { settings, orders, articles, suppliers, users }
+enum AdminSection { settings, orders, articles, suppliers, users, brand }
 
 class _NavEntry {
   final AdminSection section;
@@ -22,6 +22,7 @@ const _navEntries = [
   _NavEntry(AdminSection.articles, 'Artiklar', Icons.inventory_2_outlined, '/admin/articles'),
   _NavEntry(AdminSection.suppliers, 'Leverantörer', Icons.local_shipping_outlined, '/admin/suppliers'),
   _NavEntry(AdminSection.users, 'Användare', Icons.people_outline_rounded, '/admin/users'),
+  _NavEntry(AdminSection.brand, 'Varumärke', Icons.auto_awesome_outlined, '/admin/brand'),
 ];
 
 /// Shared chrome for every admin page: a left nav (collapses to a top menu

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'admin/screens/admin_articles_screen.dart';
 import 'admin/screens/admin_article_form_screen.dart';
+import 'admin/screens/admin_brand_screen.dart';
 import 'admin/screens/admin_guard.dart';
 import 'admin/screens/admin_login_screen.dart';
 import 'admin/screens/admin_orders_screen.dart';
@@ -188,6 +189,11 @@ class LumaMarineApp extends StatelessWidget {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const AdminGuard(child: AdminUsersScreen()),
+        );
+      case '/admin/brand':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AdminGuard(child: AdminBrandScreen()),
         );
 
       case '/':

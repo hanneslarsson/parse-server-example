@@ -72,6 +72,9 @@ class AppLocalizationsDa extends AppLocalizations {
   String get noResultsBody => 'Prøv at justere din søgning eller dine filtre.';
 
   @override
+  String get retry => 'Prøv igen';
+
+  @override
   String get addToCart => 'Læg i kurv';
 
   @override
@@ -148,6 +151,9 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get fieldCountry => 'Land';
+
+  @override
+  String get fieldComment => 'Kommentar (valgfrit)';
 
   @override
   String get checkoutOrderSummaryHeading => 'Ordreoversigt';

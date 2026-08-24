@@ -25,6 +25,7 @@
   },
   "noResultsTitle": "Inga produkter hittades",
   "noResultsBody": "Prova att justera din sökning eller dina filter.",
+  "retry": "Försök igen",
   "addToCart": "Lägg i varukorg",
   "addedToCart": "{name} har lagts i varukorgen",
   "@addedToCart": {
@@ -55,6 +56,7 @@
   "fieldPostalCode": "Postnummer",
   "fieldCity": "Ort",
   "fieldCountry": "Land",
+  "fieldComment": "Kommentar (valfritt)",
   "checkoutOrderSummaryHeading": "Ordersammanfattning",
   "checkoutDemoNotice": "Detta är en testbutik. Ingen betalning behandlas och ingen riktig order skickas.",
   "checkoutPlaceOrder": "Lägg beställning",

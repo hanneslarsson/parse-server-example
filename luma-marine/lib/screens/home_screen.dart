@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/product.dart';
+import '../providers/locale_provider.dart';
+import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_scaffold.dart';
 import '../widgets/wave_divider.dart';
@@ -14,12 +17,15 @@ class HomeScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final compact = Breakpoints.isCompact(width);
+    final locale = context.watch<LocaleProvider>().locale.languageCode;
+    final banners = context.watch<SettingsProvider>().activeBanners;
 
     return AppScaffold(
       section: NavSection.home,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          for (final banner in banners) _AnnouncementBar(text: banner.message.forLocale(locale)),
           _Hero(compact: compact, l10n: l10n),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -303,6 +309,28 @@ class _GuideTeaser extends StatelessWidget {
         side: const BorderSide(color: AppColors.seafoam),
       ),
       child: Text(l10n.navGuides),
+    );
+  }
+}
+
+/// A slim, date-controlled announcement strip — content and scheduling are
+/// managed entirely from the admin panel (Settings → Banners).
+class _AnnouncementBar extends StatelessWidget {
+  final String text;
+
+  const _AnnouncementBar({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: AppColors.seafoamDark,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: AppColors.white, fontSize: 13, fontWeight: FontWeight.w500),
+      ),
     );
   }
 }

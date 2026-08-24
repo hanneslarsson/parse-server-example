@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/products_data.dart';
 import '../l10n/app_localizations.dart';
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
+import '../providers/catalog_provider.dart';
 import '../providers/locale_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_scaffold.dart';
@@ -18,9 +18,31 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final locale = context.watch<LocaleProvider>().locale.languageCode;
-    final product = demoProducts.firstWhere((p) => p.id == productId);
+    final product = context.watch<CatalogProvider>().byId(productId);
     final width = MediaQuery.sizeOf(context).width;
     final compact = Breakpoints.isCompact(width);
+
+    if (product == null) {
+      return AppScaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 96),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(l10n.noResultsTitle),
+                const SizedBox(height: 12),
+                TextButton.icon(
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  icon: const Icon(Icons.arrow_back_rounded, size: 18),
+                  label: Text(l10n.backToShop),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     final gallery = AspectRatio(
       aspectRatio: 4 / 3,

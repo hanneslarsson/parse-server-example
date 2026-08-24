@@ -222,6 +222,12 @@ abstract class AppLocalizations {
   /// **'Prova att justera din sökning eller dina filter.'**
   String get noResultsBody;
 
+  /// No description provided for @retry.
+  ///
+  /// In sv, this message translates to:
+  /// **'Försök igen'**
+  String get retry;
+
   /// No description provided for @addToCart.
   ///
   /// In sv, this message translates to:
@@ -371,6 +377,12 @@ abstract class AppLocalizations {
   /// In sv, this message translates to:
   /// **'Land'**
   String get fieldCountry;
+
+  /// No description provided for @fieldComment.
+  ///
+  /// In sv, this message translates to:
+  /// **'Kommentar (valfritt)'**
+  String get fieldComment;
 
   /// No description provided for @checkoutOrderSummaryHeading.
   ///

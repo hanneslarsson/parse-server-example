@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/products_data.dart';
 import '../l10n/app_localizations.dart';
 import '../models/product.dart';
+import '../providers/catalog_provider.dart';
 import '../providers/locale_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_scaffold.dart';
@@ -40,8 +40,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
     super.dispose();
   }
 
-  List<Product> _filtered(String locale) {
-    return demoProducts.where((p) {
+  List<Product> _filtered(List<Product> products, String locale) {
+    return products.where((p) {
       if (_category != null && p.category != _category) return false;
       if (p.priceSek < _priceRange.start || p.priceSek > _priceRange.end) {
         return false;
@@ -58,9 +58,41 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final locale = context.watch<LocaleProvider>().locale.languageCode;
-    final results = _filtered(locale);
+    final catalog = context.watch<CatalogProvider>();
     final width = MediaQuery.sizeOf(context).width;
     final compact = Breakpoints.isCompact(width);
+
+    if (catalog.status == CatalogStatus.loading) {
+      return const AppScaffold(
+        section: NavSection.shop,
+        body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 96),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+    if (catalog.status == CatalogStatus.error) {
+      return AppScaffold(
+        section: NavSection.shop,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 96),
+          child: Center(
+            child: Column(
+              children: [
+                Text(catalog.errorMessage ?? l10n.noResultsBody),
+                const SizedBox(height: 12),
+                ElevatedButton(
+                  onPressed: () => catalog.load(),
+                  child: Text(l10n.retry),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    final results = _filtered(catalog.products, locale);
 
     return AppScaffold(
       section: NavSection.shop,

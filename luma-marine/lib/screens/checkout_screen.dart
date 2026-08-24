@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
 import '../providers/cart_provider.dart';
 import '../providers/locale_provider.dart';
+import '../services/api_client.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_scaffold.dart';
 
@@ -26,7 +25,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final _postalCode = TextEditingController();
   final _city = TextEditingController();
   final _country = TextEditingController(text: 'Sverige');
+  final _comment = TextEditingController();
+  final _api = ApiClient();
   bool _submitting = false;
+  String? _submitError;
 
   @override
   void dispose() {
@@ -39,6 +41,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       _postalCode,
       _city,
       _country,
+      _comment,
     ]) {
       c.dispose();
     }
@@ -56,14 +59,49 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       );
       return;
     }
-    setState(() => _submitting = true);
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (!mounted) return;
-    final orderNumber =
-        'LM-${100000 + Random().nextInt(899999)}';
-    context.read<CartProvider>().clear();
-    Navigator.of(context)
-        .pushReplacementNamed('/confirmation', arguments: orderNumber);
+    setState(() {
+      _submitting = true;
+      _submitError = null;
+    });
+    final cart = context.read<CartProvider>();
+    try {
+      final response = await _api.post('/api/public/orders', body: {
+        'customer': {
+          'firstName': _firstName.text.trim(),
+          'lastName': _lastName.text.trim(),
+          'email': _email.text.trim(),
+          'phone': _phone.text.trim(),
+        },
+        'shippingAddress': {
+          'address': _address.text.trim(),
+          'postalCode': _postalCode.text.trim(),
+          'city': _city.text.trim(),
+          'country': _country.text.trim(),
+        },
+        'comment': _comment.text.trim(),
+        'items': cart.lines
+            .map((line) => {
+                  'articleId': line.product.id,
+                  'quantity': line.quantity,
+                })
+            .toList(),
+      }) as Map<String, dynamic>;
+      if (!mounted) return;
+      final orderNumber = response['orderNumber'] as String;
+      cart.clear();
+      Navigator.of(context)
+          .pushReplacementNamed('/confirmation', arguments: orderNumber);
+    } on ApiException catch (e) {
+      setState(() {
+        _submitting = false;
+        _submitError = e.message;
+      });
+    } catch (_) {
+      setState(() {
+        _submitting = false;
+        _submitError = l10n.checkoutValidationError;
+      });
+    }
   }
 
   @override
@@ -152,6 +190,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             validator: _required,
             decoration: InputDecoration(labelText: l10n.fieldCountry),
           ),
+          const SizedBox(height: 24),
+          TextFormField(
+            controller: _comment,
+            maxLines: 3,
+            decoration: InputDecoration(labelText: l10n.fieldComment),
+          ),
         ],
       ),
     );
@@ -217,6 +261,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ],
             ),
           ),
+          if (_submitError != null) ...[
+            const SizedBox(height: 12),
+            Text(_submitError!, style: const TextStyle(color: AppColors.danger)),
+          ],
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _submitting ? null : _placeOrder,

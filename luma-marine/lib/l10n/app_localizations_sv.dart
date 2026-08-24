@@ -73,6 +73,9 @@ class AppLocalizationsSv extends AppLocalizations {
       'Prova att justera din sökning eller dina filter.';
 
   @override
+  String get retry => 'Försök igen';
+
+  @override
   String get addToCart => 'Lägg i varukorg';
 
   @override
@@ -149,6 +152,9 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get fieldCountry => 'Land';
+
+  @override
+  String get fieldComment => 'Kommentar (valfritt)';
 
   @override
   String get checkoutOrderSummaryHeading => 'Ordersammanfattning';

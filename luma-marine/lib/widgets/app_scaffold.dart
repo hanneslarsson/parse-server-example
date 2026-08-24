@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/cart_provider.dart';
 import '../providers/locale_provider.dart';
+import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
 
 enum NavSection { home, shop, guides, other }
@@ -211,8 +212,13 @@ class _Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final locale = context.watch<LocaleProvider>().locale.languageCode;
+    final settings = context.watch<SettingsProvider>();
     final width = MediaQuery.sizeOf(context).width;
     final compact = Breakpoints.isCompact(width);
+    final hasContactInfo =
+        settings.contactEmail.isNotEmpty || settings.contactPhone.isNotEmpty;
+
     return Container(
       color: AppColors.navy,
       padding: EdgeInsets.symmetric(
@@ -242,6 +248,27 @@ class _Footer extends StatelessWidget {
             l10n.footerTagline,
             style: const TextStyle(color: Color(0xFFB7C5CE)),
           ),
+          if (hasContactInfo || settings.openingHours.forLocale(locale).isNotEmpty) ...[
+            const SizedBox(height: 20),
+            Text(
+              _contactHeading(locale),
+              style: const TextStyle(
+                  color: AppColors.white, fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+            const SizedBox(height: 8),
+            if (settings.contactEmail.isNotEmpty)
+              Text(settings.contactEmail,
+                  style: const TextStyle(color: Color(0xFFB7C5CE), fontSize: 13)),
+            if (settings.contactPhone.isNotEmpty)
+              Text(settings.contactPhone,
+                  style: const TextStyle(color: Color(0xFFB7C5CE), fontSize: 13)),
+            if (settings.openingHours.forLocale(locale).isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(settings.openingHours.forLocale(locale),
+                    style: const TextStyle(color: Color(0xFFB7C5CE), fontSize: 13)),
+              ),
+          ],
           const SizedBox(height: 16),
           Text(
             l10n.footerRights(DateTime.now().year),
@@ -250,5 +277,19 @@ class _Footer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static String _contactHeading(String locale) {
+    switch (locale) {
+      case 'en':
+        return 'Contact & opening hours';
+      case 'no':
+        return 'Kontakt og åpningstider';
+      case 'da':
+        return 'Kontakt og åbningstider';
+      case 'sv':
+      default:
+        return 'Kontakt & öppettider';
+    }
   }
 }

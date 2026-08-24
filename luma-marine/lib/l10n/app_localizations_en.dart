@@ -72,6 +72,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noResultsBody => 'Try adjusting your search or filters.';
 
   @override
+  String get retry => 'Try again';
+
+  @override
   String get addToCart => 'Add to cart';
 
   @override
@@ -148,6 +151,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fieldCountry => 'Country';
+
+  @override
+  String get fieldComment => 'Comment (optional)';
 
   @override
   String get checkoutOrderSummaryHeading => 'Order summary';

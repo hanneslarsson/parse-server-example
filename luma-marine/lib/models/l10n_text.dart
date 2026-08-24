@@ -14,6 +14,17 @@ class L10nText {
     required this.da,
   });
 
+  factory L10nText.fromJson(Map<String, dynamic> json) => L10nText(
+        sv: json['sv'] as String? ?? '',
+        en: json['en'] as String? ?? '',
+        no: json['no'] as String? ?? '',
+        da: json['da'] as String? ?? '',
+      );
+
+  Map<String, String> toJson() => {'sv': sv, 'en': en, 'no': no, 'da': da};
+
+  static const empty = L10nText(sv: '', en: '', no: '', da: '');
+
   String forLocale(String languageCode) {
     switch (languageCode) {
       case 'en':

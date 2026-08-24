@@ -81,10 +81,11 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                     const SizedBox(height: 24),
                     TextFormField(
                       controller: _email,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(labelText: 'E-post'),
-                      validator: (v) =>
-                          (v == null || v.isEmpty) ? 'Ange e-post' : null,
+                      decoration:
+                          const InputDecoration(labelText: 'Användarnamn'),
+                      validator: (v) => (v == null || v.isEmpty)
+                          ? 'Ange användarnamn'
+                          : null,
                     ),
                     const SizedBox(height: 12),
                     TextFormField(

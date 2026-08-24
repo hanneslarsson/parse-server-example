@@ -81,7 +81,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                 const SizedBox(height: 12),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(labelText: 'E-post'),
+                  decoration: const InputDecoration(labelText: 'Användarnamn'),
                 ),
                 const SizedBox(height: 12),
                 TextField(

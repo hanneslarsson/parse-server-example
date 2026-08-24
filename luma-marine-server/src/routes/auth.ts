@@ -8,8 +8,11 @@ import { requireAdmin, type AuthedRequest } from "../middleware/auth";
 
 export const authRouter = Router();
 
+// Login identifier can be an email or a plain username (e.g. "mattias") —
+// AdminUser.email is really just a unique login identifier, not necessarily
+// an email address.
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.string().min(1),
   password: z.string().min(1),
 });
 

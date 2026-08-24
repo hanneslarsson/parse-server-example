@@ -19,7 +19,7 @@ usersRouter.get("/", (_req, res) => {
 });
 
 const createSchema = z.object({
-  email: z.string().email(),
+  email: z.string().min(1),
   name: z.string().min(1),
   password: z.string().min(8),
 });

@@ -17,6 +17,12 @@ export const config = {
   corsOrigin: process.env.CORS_ORIGIN ?? "*",
   adminBootstrapEmail: process.env.ADMIN_BOOTSTRAP_EMAIL ?? "admin@lumamarine.se",
   adminBootstrapPassword: process.env.ADMIN_BOOTSTRAP_PASSWORD ?? randomPassword(),
+  // Named admin accounts requested for this deployment. Real values belong
+  // in a local, gitignored .env — never hardcoded here — so a random
+  // password is generated (and printed once on first run, like the
+  // bootstrap admin) if the env var isn't set.
+  mattiasPassword: process.env.MATTIAS_PASSWORD ?? randomPassword(),
+  hannesPassword: process.env.HANNES_PASSWORD ?? randomPassword(),
 };
 
 if (config.jwtSecret === "dev-secret-change-me-in-production") {

@@ -31,13 +31,20 @@ app.use((req, res) => {
 app.listen(config.port, () => {
   console.log(`[luma-marine-server] listening on http://localhost:${config.port}`);
   if (userStore.wasSeeded) {
-    const admin = userStore.all()[0];
+    const passwordsByEmail: Record<string, string> = {
+      [config.adminBootstrapEmail]: config.adminBootstrapPassword,
+      mattias: config.mattiasPassword,
+      hannes: config.hannesPassword,
+    };
     console.log("");
     console.log("=============================================================");
-    console.log(" First run — bootstrap admin account created:");
-    console.log(`   email:    ${admin.email}`);
-    console.log(`   password: ${config.adminBootstrapPassword}`);
-    console.log(" Save this now — it will not be printed again.");
+    console.log(" First run — bootstrap admin accounts created:");
+    for (const user of userStore.all()) {
+      console.log(`   ${user.email} / ${passwordsByEmail[user.email]}`);
+    }
+    console.log(" Save these now — they will not be printed again.");
+    console.log(" (Unset MATTIAS_PASSWORD/HANNES_PASSWORD/ADMIN_BOOTSTRAP_PASSWORD");
+    console.log("  in .env get a random password here; set them to pin your own.)");
     console.log("=============================================================");
     console.log("");
   }

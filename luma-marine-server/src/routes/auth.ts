@@ -1,5 +1,5 @@
 import { Router } from "express";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs"; // re-add when the check below is restored
 import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { config } from "../config";
@@ -11,9 +11,15 @@ export const authRouter = Router();
 // Login identifier can be an email or a plain username (e.g. "mattias") —
 // AdminUser.email is really just a unique login identifier, not necessarily
 // an email address.
+//
+// BETA: password is intentionally not checked below — sign-in is
+// username-only while this is in beta, per explicit request. This is not
+// real access control. Before this goes anywhere beyond a beta/internal
+// preview, make `password` required again and restore the
+// bcrypt.compareSync check that's commented out further down.
 const loginSchema = z.object({
   email: z.string().min(1),
-  password: z.string().min(1),
+  password: z.string().optional(),
 });
 
 authRouter.post("/login", (req, res) => {
@@ -22,14 +28,18 @@ authRouter.post("/login", (req, res) => {
     res.status(400).json({ error: "Invalid request body" });
     return;
   }
-  const { email, password } = parsed.data;
+  const { email } = parsed.data;
   const user = userStore.find(
     (u) => u.email.toLowerCase() === email.toLowerCase(),
   );
-  if (!user || !user.active || !bcrypt.compareSync(password, user.passwordHash)) {
-    res.status(401).json({ error: "Invalid email or password" });
+  if (!user || !user.active) {
+    res.status(401).json({ error: "Unknown or inactive username" });
     return;
   }
+  // if (!bcrypt.compareSync(password ?? "", user.passwordHash)) {
+  //   res.status(401).json({ error: "Invalid email or password" });
+  //   return;
+  // }
   const token = jwt.sign({ sub: user.id }, config.jwtSecret, {
     expiresIn: "12h",
   });

@@ -14,14 +14,12 @@ class AdminLoginScreen extends StatefulWidget {
 class _AdminLoginScreenState extends State<AdminLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _email = TextEditingController();
-  final _password = TextEditingController();
   bool _submitting = false;
   String? _error;
 
   @override
   void dispose() {
     _email.dispose();
-    _password.dispose();
     super.dispose();
   }
 
@@ -31,9 +29,8 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
       _submitting = true;
       _error = null;
     });
-    final error = await context
-        .read<AdminAuthProvider>()
-        .login(_email.text.trim(), _password.text);
+    final error =
+        await context.read<AdminAuthProvider>().login(_email.text.trim());
     if (!mounted) return;
     if (error == null) {
       Navigator.of(context).pushReplacementNamed('/admin/settings');
@@ -83,18 +80,15 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                       controller: _email,
                       decoration:
                           const InputDecoration(labelText: 'Användarnamn'),
+                      onFieldSubmitted: (_) => _submit(),
                       validator: (v) => (v == null || v.isEmpty)
                           ? 'Ange användarnamn'
                           : null,
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _password,
-                      obscureText: true,
-                      decoration: const InputDecoration(labelText: 'Lösenord'),
-                      onFieldSubmitted: (_) => _submit(),
-                      validator: (v) =>
-                          (v == null || v.isEmpty) ? 'Ange lösenord' : null,
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Beta: inget lösenord krävs ännu.',
+                      style: TextStyle(color: AppColors.slate, fontSize: 12),
                     ),
                     if (_error != null) ...[
                       const SizedBox(height: 8),

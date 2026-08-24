@@ -41,11 +41,13 @@ class AdminAuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> login(String email, String password) async {
+  // BETA: username only, no password — see the matching note in the
+  // backend's /api/auth/login handler. Restore the password parameter here
+  // when that's re-enabled.
+  Future<String?> login(String username) async {
     try {
       final json = await _api.post('/api/auth/login', body: {
-        'email': email,
-        'password': password,
+        'email': username,
       }) as Map<String, dynamic>;
       token = json['token'] as String;
       final user = json['user'] as Map<String, dynamic>;

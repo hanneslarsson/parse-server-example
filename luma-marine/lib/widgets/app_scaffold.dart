@@ -6,6 +6,7 @@ import '../providers/cart_provider.dart';
 import '../providers/locale_provider.dart';
 import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
+import 'luma_logo.dart';
 
 enum NavSection { home, shop, guides, other }
 
@@ -81,21 +82,7 @@ class _TopNav extends StatelessWidget {
           InkWell(
             onTap: () =>
                 Navigator.of(context).pushNamedAndRemoveUntil('/', (r) => false),
-            child: Row(
-              children: [
-                const Icon(Icons.water_rounded, color: AppColors.seafoamDark),
-                const SizedBox(width: 8),
-                Text(
-                  l10n.appTitle,
-                  style: const TextStyle(
-                    fontFamily: 'InterDisplay',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    color: AppColors.navy,
-                  ),
-                ),
-              ],
-            ),
+            child: const LumaLogoLockup(color: AppColors.navy, markSize: 30),
           ),
           const Spacer(),
           if (!compact) ...[
@@ -228,21 +215,7 @@ class _Footer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.water_rounded, color: AppColors.seafoam),
-              const SizedBox(width: 8),
-              Text(
-                l10n.appTitle,
-                style: const TextStyle(
-                  fontFamily: 'InterDisplay',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                  color: AppColors.white,
-                ),
-              ),
-            ],
-          ),
+          const LumaLogoLockup(color: AppColors.white, markSize: 26),
           const SizedBox(height: 8),
           Text(
             l10n.footerTagline,

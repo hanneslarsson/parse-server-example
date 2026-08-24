@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/admin_auth_provider.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/luma_logo.dart';
 
 enum AdminSection { settings, orders, articles, suppliers, users }
 
@@ -57,19 +58,7 @@ class AdminShell extends StatelessWidget {
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.water_rounded, color: AppColors.seafoam),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Luma Marine',
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: const LumaLogoLockup(color: AppColors.white, markSize: 22),
                 ),
                 const SizedBox(height: 4),
                 const Padding(

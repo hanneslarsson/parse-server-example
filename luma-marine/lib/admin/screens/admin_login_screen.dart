@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/admin_auth_provider.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/luma_logo.dart';
 
 class AdminLoginScreen extends StatefulWidget {
   const AdminLoginScreen({super.key});
@@ -63,16 +64,16 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Icon(Icons.admin_panel_settings_outlined,
-                        color: AppColors.navy, size: 32),
+                    const Center(child: LumaMark(size: 40, color: AppColors.navy)),
                     const SizedBox(height: 12),
                     const Text(
-                      'Luma Marine Admin',
+                      'ADMIN',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.navy,
+                        letterSpacing: 3,
+                        color: AppColors.slate,
                       ),
                     ),
                     const SizedBox(height: 24),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../gate/preview_gate.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
+import '../widgets/luma_logo.dart';
 import '../widgets/wave_divider.dart';
 
 class GateScreen extends StatefulWidget {
@@ -63,20 +64,7 @@ class _GateScreenState extends State<GateScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: AppColors.seafoam.withValues(alpha: 0.15),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.water_rounded,
-                              color: AppColors.seafoamDark, size: 28),
-                        ),
-                      ],
-                    ),
+                    const Center(child: LumaMark(size: 44, color: AppColors.navy)),
                     const SizedBox(height: 16),
                     Text(
                       l10n.gateTitle,

@@ -20,8 +20,10 @@ Without it, the storefront will show a "couldn't load the catalog" state.
   processor wired up — clearly labeled as a demo checkout in the UI).
 - Date-controlled announcement banners and contact info/opening hours on the
   homepage, both editable from the admin panel.
-- Nordic clean marine visual design (navy/seafoam palette, Inter/InterDisplay
-  type, bundled locally as fonts).
+- Visual identity matched to the Luma Marine merchandise line — deep navy
+  + white as the core brand colors, the "LM" monogram/wordmark, Inter/Inter
+  Tight type. See **[BRAND.md](./BRAND.md)** for the full rationale and the
+  published brand guide.
 - A client-side password gate for previewing the site while it's in
   development (see **Preview password** below) — separate from and unrelated
   to admin login.

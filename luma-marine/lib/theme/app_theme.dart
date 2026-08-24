@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
-/// Nordic clean marine palette: deep marine navy, crisp white,
-/// cool fog grays, and a seafoam accent.
+/// Brand palette, matched to the Luma Marine merchandise line: a deep,
+/// near-black navy and white as the two core brand colors (see
+/// BRAND.md), plus a muted steel-teal used only as a functional UI
+/// accent — not part of the core brand identity — for interactive states
+/// (active nav, focus rings, status chips) where navy-on-white alone
+/// can't carry the distinction.
 class AppColors {
   AppColors._();
 
-  static const navy = Color(0xFF0B2E44);
-  static const navyDark = Color(0xFF071E2E);
-  static const navyLight = Color(0xFF184C6B);
-  static const seafoam = Color(0xFF3FB8AF);
-  static const seafoamDark = Color(0xFF2C8F88);
+  static const navy = Color(0xFF0A1930);
+  static const navyDark = Color(0xFF060F1F);
+  static const navyLight = Color(0xFF1C3A5E);
+  static const seafoam = Color(0xFF4AA3B5);
+  static const seafoamDark = Color(0xFF357A8C);
   static const sand = Color(0xFFF4F1EA);
   static const fog = Color(0xFFE7ECEF);
   static const fogDark = Color(0xFFCBD5DB);

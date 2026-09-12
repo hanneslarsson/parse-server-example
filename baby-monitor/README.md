@@ -17,7 +17,19 @@ direkt till varandra (peer-to-peer, WebRTC).
 Ingen inloggning krävs och ingen data sparas på någon server – anslutningen
 sker peer-to-peer via WebRTC, med [Trystero](https://github.com/dmotz/trystero)
 (BitTorrent-strategin) som enda hjälpmedel för att hitta motparten, eftersom
-det inte finns någon egen backend på GitHub Pages.
+det inte finns någon egen backend.
+
+## Driftsättning
+
+Sidan är helt statisk (ingen build), så vilken statisk webbhotell-tjänst som
+helst funkar. Den här mappen är kopplad till **Cloudflare Pages**:
+
+- Build command: (tomt)
+- Build output directory: `baby-monitor`
+
+Cloudflare Pages funkar med privata repon på gratisnivån, till skillnad från
+GitHub Pages som kräver ett publikt repo eller en betald organisationsplan
+för privata repon.
 
 ## Begränsningar
 

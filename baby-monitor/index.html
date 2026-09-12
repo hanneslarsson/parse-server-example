@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Babylarm</title>
+  <meta name="description" content="Babylarm mellan två telefoner via webbläsaren, utan inloggning." />
+  <meta name="theme-color" content="#20232f" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👶</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>👶 Babylarm</h1>
+    </header>
+
+    <!-- Val av enhet -->
+    <section id="view-select" class="view">
+      <p class="lead">Välj vilken enhet den här telefonen ska vara.</p>
+      <div class="choice-grid">
+        <button id="btn-baby" class="choice-card" type="button">
+          <span class="choice-icon">👶</span>
+          <span class="choice-title">Barnenhet</span>
+          <span class="choice-desc">Placeras hos barnet. Sänder ljud.</span>
+        </button>
+        <button id="btn-parent" class="choice-card" type="button">
+          <span class="choice-icon">🧑‍🦱</span>
+          <span class="choice-title">Föräldraenhet</span>
+          <span class="choice-desc">Lyssnar på ljudet från barnet.</span>
+        </button>
+      </div>
+      <p class="hint">Ingen inloggning behövs. Håll den här fliken öppen så länge larmet ska vara på.</p>
+    </section>
+
+    <!-- Barnenhet -->
+    <section id="view-baby" class="view" hidden>
+      <p class="lead">Barnenhet</p>
+      <div id="baby-code-box" class="code-box">
+        <span class="code-label">Rumskod</span>
+        <span id="baby-code" class="code-value">------</span>
+      </div>
+      <p class="hint">Ange den här koden på föräldraenheten för att ansluta.</p>
+
+      <div class="status-row">
+        <span id="baby-status-dot" class="status-dot status-waiting"></span>
+        <span id="baby-status-text">Startar mikrofon…</span>
+      </div>
+
+      <div class="meter"><div id="baby-meter-fill" class="meter-fill"></div></div>
+
+      <button id="baby-mute" class="secondary-btn" type="button" disabled>Stäng av mikrofon</button>
+      <button id="baby-stop" class="stop-btn" type="button">Stäng av barnenhet</button>
+    </section>
+
+    <!-- Föräldraenhet -->
+    <section id="view-parent" class="view" hidden>
+      <p class="lead">Föräldraenhet</p>
+
+      <form id="parent-join-form" class="join-form">
+        <label for="parent-code-input">Rumskod från barnenheten</label>
+        <input id="parent-code-input" type="text" inputmode="text" autocomplete="off" autocapitalize="characters"
+               maxlength="6" placeholder="ABC123" required />
+        <button type="submit" class="primary-btn">Anslut</button>
+      </form>
+
+      <div id="parent-connected" hidden>
+        <div class="status-row">
+          <span id="parent-status-dot" class="status-dot status-waiting"></span>
+          <span id="parent-status-text">Ansluter…</span>
+        </div>
+
+        <div class="meter"><div id="parent-meter-fill" class="meter-fill"></div></div>
+
+        <label class="volume-row">
+          Volym
+          <input id="parent-volume" type="range" min="0" max="100" value="100" />
+        </label>
+
+        <button id="parent-stop" class="stop-btn" type="button">Stäng av föräldraenhet</button>
+      </div>
+    </section>
+
+    <p id="error-banner" class="error-banner" hidden></p>
+
+    <button id="btn-back" class="link-btn" type="button" hidden>← Byt enhet</button>
+  </main>
+
+  <audio id="remote-audio" autoplay playsinline></audio>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
